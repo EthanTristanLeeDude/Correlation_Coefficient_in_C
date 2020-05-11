@@ -81,7 +81,7 @@ void main(void)
             }
             int32_t exey = (int32_t)EY*EX;
             int32_t exy_exey = EXY - exey;
-            numerator = (int32_t)128*exy_exey;
+            numerator = (int32_t)100*exy_exey;            //this will make the range of pXY -100 to +100 rather than -1 to +1
 
             if ( (EY*EY) < EYY){
                 int32_t eyey= (int32_t)EY*EY;
