@@ -12,6 +12,7 @@ int32_t sdy =60;                        // initial standard deviation of y estim
 uint16_t rawPostVGA = 0;
   
 //correlation_function_X is the function to which we are checking the correlation to Y_data
+//this could be a known voice audio clip for example, or whatever signal you are searching for.
 uint8_t correlation_function_X[32] = {120,125,120,115,120,125,120,115,120,125,120,115,120,125,120,115,120,125,120,115,120,125,120,115,120,125,120,115,120,125,120,115}; 
 uint16_t SDX = 4;                       //standard deviation of x - SD[X]
 int16_t EX = 120;                       //expected value of correlation function - E[X]
