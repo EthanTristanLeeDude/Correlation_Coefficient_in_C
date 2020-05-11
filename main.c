@@ -116,7 +116,7 @@ void main(void)
             }
             
             if (first_pXY_ready){                   //start printing the correlation coefficient as soon as the first valid calc is ready
-              printf ("pXY = %ld, \n\r", pXY);   
+              printf ("%ld,", pXY);   
             }
                                                                                     
             msec_2_Flag=0;                         // this should alway be reset before it gets set again in the the interrupt routine               
