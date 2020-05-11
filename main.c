@@ -8,7 +8,7 @@ bool first_pXY_ready =0;                //this will be set after 32 samples have
 
 #define adc_postVGA channel_AN0
 
-int32_t sdy =60;                        // initial standard deviation of y estimate
+int32_t sdy =60;                        // initial guess for the standard deviation of y
 uint16_t rawPostVGA = 0;
   
 //correlation_function_X is the function to which we are checking the correlation to Y_data
@@ -22,7 +22,6 @@ int16_t Y_data[32] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 uint8_t Yptr = 0;                       //points to current y data sample
 int16_t EY = 0;                         //expected value of y, E[Y]
 int32_t EYY = 0;                        //expected value of y^2, E[Y^2]
-int16_t SDY = 0;                        //standard deviation of y
 int32_t EXY =0;                         //expected value of x*y, E[XY]
 int16_t Y_accumulate =0;
 int32_t YY_accumulate = 0;
@@ -87,6 +86,9 @@ void main(void)
             if ( (EY*EY) < EYY){
                 int32_t eyey= (int32_t)EY*EY;
                 int32_t eyy_eyey = EYY-(int32_t)EY*EY;
+                
+                //Here I start the babylonian method for calculating the square root. 
+                //The result happens to be the standard deviation of y in this case.
                 int32_t initial_sqrt_estimate = sdy;
 
                 int32_t second_estimate = (int32_t)initial_sqrt_estimate + eyy_eyey/ initial_sqrt_estimate;
@@ -96,7 +98,7 @@ void main(void)
                 third_estimate = (int32_t)third_estimate>>1; 
 
                 int32_t forth_estimate = (int32_t)third_estimate + eyy_eyey/ third_estimate;
-                sdy = (int32_t)forth_estimate>>1;   
+                sdy = (int32_t)forth_estimate>>1;       //final square root estimate
                 if (sdy ==0){
                     sdy =1;
                 }
