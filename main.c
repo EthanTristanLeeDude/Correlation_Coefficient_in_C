@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-bool msec_20_Flag = 0;
+bool msec_2_Flag = 0;
 bool first_pXY_ready =0;                //this will be set after 32 samples have been taken 
 
 #define adc_postVGA channel_AN0
@@ -35,14 +35,14 @@ int32_t pXY = 0;                        //initialize the correlation coefficient
 void main(void)
 {
     // initialize the device
-    msec_20_Flag = 0;   
+    msec_2_Flag = 0;   
     SYSTEM_Initialize();
     INTERRUPT_GlobalInterruptEnable();
     INTERRUPT_PeripheralInterruptEnable();
  
     while (1){
  
-        if(msec_20_Flag==1){              //this is set by an external 20 msec interrupt routine (every 20 msec in this case)         
+        if(msec_2_Flag==1){              //this is set by an external timer interrupt routine (once every 2 msec in this case)         
                     
             //Aquire the new sample:   
             rawPostVGA = ADC_GetConversion(adc_postVGA);       
@@ -119,7 +119,7 @@ void main(void)
               printf ("pXY = %ld, \n\r", pXY);   
             }
                                                                                     
-            msec_20_Flag=0;                         // this should alway be reset before it gets set again in the the interrupt routine               
+            msec_2_Flag=0;                         // this should alway be reset before it gets set again in the the interrupt routine               
         }                   
     }    
 }
